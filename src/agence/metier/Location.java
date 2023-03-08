@@ -50,6 +50,16 @@ public class Location {
     }
 
     /**
+     *
+     * @param dateLoc date de la location
+     * @param kmtotal kilomètre(s) total du trajet de la location
+     */
+    public Location(LocalDate dateLoc, int kmtotal) {
+        this.dateLoc = dateLoc;
+        this.kmtotal = kmtotal;
+    }
+
+    /**
      * constructeur paramétré
      *
      * @param idLocation identifiant unique de la location, affecté par la base de données
@@ -187,6 +197,18 @@ public class Location {
                 ", kmtotal=" + kmtotal +
                 ", client=" + client +
                 ", adrDepart=" + adrDepart +
+                '}';
+    }
+
+    /**
+     * méthode toString2
+     *
+     * @return informations sur la date et les kilomètres total de la location
+     */
+    public String toString2() {
+        return "Location{" +
+                "dateLoc=" + dateLoc +
+                ", kmtotal=" + kmtotal +
                 '}';
     }
 }
