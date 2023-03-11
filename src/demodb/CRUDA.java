@@ -112,13 +112,83 @@ public class CRUDA {
     public void modification() {
         System.out.println("Id du client recherché : ");
         int idrech = sc.nextInt();
-        sc.skip("\n");
+        String query = "select * from APITCLIENT where idclient = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,idrech);
+            ResultSet rs = pstm.executeQuery();
+            if(rs.next()){
+                String mail = rs.getString(2);
+                String nom = rs.getString(3);
+                String prenom = rs.getString(4);
+                String tel = rs.getString(5);
+                Client cl = new Client(idrech,mail,nom,prenom,tel);
+                System.out.println(cl);
+                opModification(cl);
+            }
+            else System.out.println("Record introuvable.");
+        } catch (SQLException e) {
+            System.out.println("Erreur sql : "+e);
+        }
+    }
+
+    private void opModification(Client client) {
+        do {
+            System.out.println("1.Mail\n2.Nom\n3.Prénom\n4.Téléphone\n5.Menu principal");
+            System.out.print("Choix : ");
+            int ch = sc.nextInt();
+            sc.skip("\n");
+            switch (ch) {
+                case 1:
+                    mail(client);
+                    break;
+                case 2:
+                    nom(client);
+                    break;
+                case 3:
+                    prenom(client);
+                    break;
+                case 4:
+                    tel(client);
+                    break;
+                case 5: return;
+                default:
+                    System.out.println("Choix invalide recommencez");
+            }
+        } while (true);
+    }
+
+    private void mail(Client client){
+        System.out.println("Nouveau mail : ");
+        String nmail = sc.nextLine();
+        String query = "update APITCLIENT set mail = ? where idclient = ?";
+        modificationClient(client,query,nmail);
+    }
+
+    private void nom(Client client){
+        System.out.println("Nouveau nom : ");
+        String nnom = sc.nextLine();
+        String query = "update APITCLIENT set nom = ? where idclient = ?";
+        modificationClient(client,query,nnom);
+    }
+
+    private void prenom(Client client){
+        System.out.println("Nouveau prénom : ");
+        String nprenom = sc.nextLine();
+        String query = "update APITCLIENT set prenom = ? where idclient = ?";
+        modificationClient(client,query,nprenom);
+    }
+
+    private void tel(Client client){
         System.out.println("Nouveau téléphone : ");
         String ntel = sc.nextLine();
         String query = "update APITCLIENT set telephone = ? where idclient = ?";
+        modificationClient(client,query,ntel);
+    }
+
+    private void modificationClient(Client client, String query, String newinfo){
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
-            pstm.setString(1,ntel);
-            pstm.setInt(2,idrech);
+            pstm.setString(1,newinfo);
+            pstm.setInt(2,client.getIdClient());
             int n = pstm.executeUpdate();
             if(n!=0) System.out.println(n+" ligne mise à jour.");
             else System.out.println("Record introuvable.");
@@ -126,6 +196,7 @@ public class CRUDA {
             System.out.println("Erreur sql : " + e);
         }
     }
+
     public void suppression() {
         System.out.println("Id du client recherché : ");
         int idrech = sc.nextInt();
