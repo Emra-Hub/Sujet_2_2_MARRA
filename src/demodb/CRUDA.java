@@ -294,9 +294,10 @@ public class CRUDA {
             boolean trouve= false;
             while(rs.next()){
                 trouve=true;
+                int idlocation = rs.getInt(1);
                 LocalDate dateloc = rs.getDate(2).toLocalDate();
                 int kmtotal = rs.getInt(3);
-                Location lo = new Location(dateloc,kmtotal);
+                Location lo = new Location(idlocation,dateloc,kmtotal);
                 System.out.println(lo.toString2());
             }
             if(!trouve) System.out.println("Aucune location trouvée");

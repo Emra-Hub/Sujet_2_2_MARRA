@@ -51,10 +51,12 @@ public class Location {
 
     /**
      *
+     * @param idLocation identifiant unique de la location, affecté par la base de données
      * @param dateLoc date de la location
      * @param kmtotal kilomètre(s) total du trajet de la location
      */
-    public Location(LocalDate dateLoc, int kmtotal) {
+    public Location(int idLocation, LocalDate dateLoc, int kmtotal) {
+        this.idLocation = idLocation;
         this.dateLoc = dateLoc;
         this.kmtotal = kmtotal;
     }
@@ -203,11 +205,12 @@ public class Location {
     /**
      * méthode toString2
      *
-     * @return informations sur la date et les kilomètres total de la location
+     * @return informations sur l'identifiant, la date et les kilomètres total de la location
      */
     public String toString2() {
         return "Location{" +
-                "dateLoc=" + dateLoc +
+                "idLocation=" + idLocation +
+                ", dateLoc=" + dateLoc +
                 ", kmtotal=" + kmtotal +
                 '}';
     }
