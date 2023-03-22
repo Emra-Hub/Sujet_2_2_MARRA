@@ -11,4 +11,6 @@ public interface ClientViewInterface {
     public void setListDatas(List<Client> clients);
 
     public void affMsg(String msg);
+
+    public void affList(List infos);
 }

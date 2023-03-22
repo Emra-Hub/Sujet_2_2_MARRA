@@ -9,5 +9,9 @@ public interface DAOClient {
 
     boolean removeClient(Client client);
 
+    Client updateClient(Client client);
+
+    Client readClient(int idClient);
+
     List<Client> getClients();
 }
