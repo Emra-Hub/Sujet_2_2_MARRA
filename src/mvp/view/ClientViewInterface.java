@@ -13,4 +13,6 @@ public interface ClientViewInterface {
     public void affMsg(String msg);
 
     public void affList(List infos);
+
+    public Client selectionner(List<Client> lc);
 }

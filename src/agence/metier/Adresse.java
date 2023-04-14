@@ -1,5 +1,7 @@
 package agence.metier;
 
+import java.util.Objects;
+
 /**
  * classe adresse de l'agence
  * @author Flavio Marra
@@ -130,6 +132,28 @@ public class Adresse {
      */
     public void setNum(String num) {
         this.num = num;
+    }
+
+    /**
+     * égalité de deux adresses basée sur le cp, localite, rue, num
+     * @param o autre élément
+     * @return égalité ou pas
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adresse adresse = (Adresse) o;
+        return cp == adresse.cp && Objects.equals(localite, adresse.localite) && Objects.equals(rue, adresse.rue) && Objects.equals(num, adresse.num);
+    }
+
+    /**
+     * calcul du hashcode de l'adresse basé sur le cp, localite, rue, num
+     * @return valeur du hashcode
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(cp, localite, rue, num);
     }
 
     /**
