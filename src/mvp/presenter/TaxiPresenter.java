@@ -3,12 +3,15 @@ package mvp.presenter;
 import agence.metier.Taxi;
 import mvp.model.DAOTaxi;
 import mvp.view.TaxiViewInterface;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class TaxiPresenter {
     private DAOTaxi model;
     private TaxiViewInterface view;
+    private static final Logger logger = LogManager.getLogger(TaxiPresenter.class);
 
     public TaxiPresenter(DAOTaxi model, TaxiViewInterface view) {
         this.model = model;
@@ -39,6 +42,18 @@ public class TaxiPresenter {
         else view.affMsg("Taxi non effacé");
         //List<Taxi> taxis = model.getTaxis();
         //view.setListDatas(taxis);
+    }
+
+    public Taxi selectionner() {
+        logger.info("Appel de sélection taxi");
+        Taxi tx = view.selectionner(model.getTaxis());
+        return tx;
+    }
+
+    public boolean boucle() {
+        logger.info("Appel de la boucle");
+        Boolean ok = view.boucle();
+        return ok;
     }
 
     public void update(Taxi taxi) {

@@ -11,4 +11,8 @@ public interface TaxiViewInterface {
     public void setListDatas(List<Taxi> taxis);
 
     public void affMsg(String msg);
+
+    public Taxi selectionner(List<Taxi> lt);
+
+    public boolean boucle();
 }

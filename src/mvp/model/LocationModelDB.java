@@ -3,16 +3,18 @@ package mvp.model;
 import agence.metier.Adresse;
 import agence.metier.Client;
 import agence.metier.Location;
+import agence.metier.Taxi;
 import myconnections.DBConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationModelDB implements DAOLocation {
+public class LocationModelDB implements DAOLocation, LocationSpecial {
     private static final Logger logger = LogManager.getLogger(ClientModelDB.class);
     private Connection dbConnect;
 
@@ -160,6 +162,23 @@ public class LocationModelDB implements DAOLocation {
             //System.err.println("Erreur sql : "+e);
             logger.error("Erreur SQL : "+e);
             return null;
+        }
+    }
+
+    @Override
+    public boolean addFacturation(Location lo, Taxi tx) {
+        String query = "insert into APIFACTURATION(idlocation,idtaxi,cout) values(?,?,?)";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,lo.getIdLocation());
+            pstm.setInt(2,tx.getIdTaxi());
+            pstm.setBigDecimal(3,tx.getPrixKm().multiply(BigDecimal.valueOf(lo.getKmtotal())));
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+        } catch (SQLException e) {
+            //System.err.println("Erreur sql : "+e);
+            logger.error("Erreur SQL : "+e);
+            return false;
         }
     }
 }

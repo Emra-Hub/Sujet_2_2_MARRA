@@ -36,6 +36,24 @@ public class TaxiViewConsole implements TaxiViewInterface {
         System.out.println("Information : "+msg);
     }
 
+    @Override
+    public Taxi selectionner(List<Taxi> lt) {
+        int nl = choixListe(lt);
+        Taxi taxi = lt.get(nl-1);
+        return taxi;
+    }
+
+    @Override
+    public boolean boucle() {
+        List options = new ArrayList<>(Arrays.asList("oui","non"));
+        System.out.println("Autre taxi ?");
+        int choix = choixListe(options);
+        if (choix == 1) {
+            return true;
+        }
+        return false;
+    }
+
     public void menu(){
         List options = new ArrayList<>(Arrays.asList("Ajouter","Retirer","Rechercher","Modifier","Retour"));
         do {

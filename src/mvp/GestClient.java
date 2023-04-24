@@ -41,15 +41,16 @@ public class GestClient {
         av = new AdresseViewConsole();
         ap = new AdressePresenter(am,av);//création et injection de dépendance
 
+        tm = new TaxiModelDB();
+        tv = new TaxiViewConsole();
+        tp = new TaxiPresenter(tm,tv);//création et injection de dépendance
+
         lm = new LocationModelDB();
         lv = new LocationViewConsole();
         lp = new LocationPresenter(lm,lv);//création et injection de dépendance
         lp.setClientPresenter(cp);
         lp.setAdressePresenter(ap);
-
-        tm = new TaxiModelDB();
-        tv = new TaxiViewConsole();
-        tp = new TaxiPresenter(tm,tv);//création et injection de dépendance
+        lp.setTaxiPresenter(tp);
 
         List<String> options = Arrays.asList("Client","Adresse","Location","Taxi","Fin");
         do {

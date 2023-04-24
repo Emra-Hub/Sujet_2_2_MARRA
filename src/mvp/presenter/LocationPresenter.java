@@ -3,7 +3,9 @@ package mvp.presenter;
 import agence.metier.Adresse;
 import agence.metier.Client;
 import agence.metier.Location;
+import agence.metier.Taxi;
 import mvp.model.DAOLocation;
+import mvp.model.LocationSpecial;
 import mvp.view.LocationViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +17,7 @@ public class LocationPresenter {
     private LocationViewInterface view;
     private ClientPresenter clientPresenter;
     private AdressePresenter adressePresenter;
+    private TaxiPresenter taxiPresenter;
     private static final Logger logger = LogManager.getLogger(LocationPresenter.class);
 
     public void setAdressePresenter(AdressePresenter adressePresenter) {
@@ -24,6 +27,8 @@ public class LocationPresenter {
     public void setClientPresenter(ClientPresenter clientPresenter) {
         this.clientPresenter = clientPresenter;
     }
+
+    public void setTaxiPresenter(TaxiPresenter taxiPresenter) { this.taxiPresenter = taxiPresenter; }
 
     public LocationPresenter(DAOLocation model, LocationViewInterface view) {
         this.model = model;
@@ -45,6 +50,7 @@ public class LocationPresenter {
         location.setClient(cl);
         location.setAdrDepart(adr);
         Location lo = model.addLocation(location);
+        addFacturation(lo);
         if(lo!=null) view.affMsg("Création de : "+lo);
         else view.affMsg("Erreur de création");
         //List<Location> locations = model.getLocations();
@@ -78,5 +84,16 @@ public class LocationPresenter {
         Location lo = model.readLocation(idLocation);
         if(lo==null) view.affMsg("Recherche infructueuse");
         else view.affMsg(lo.toString());
+    }
+
+    public void addFacturation(Location lo) {
+        Boolean boucle = true;
+        while(boucle) {
+            Taxi tx = taxiPresenter.selectionner();
+            boolean ok = ((LocationSpecial)model).addFacturation(lo,tx);
+            if(ok) view.affMsg("Facturation ajoutée");
+            else view.affMsg("Erreur lors de l'ajout de la facturation");
+            boucle = taxiPresenter.boucle();
+        }
     }
 }
