@@ -1,5 +1,6 @@
 package mvp.presenter;
 
+import agence.metier.Location;
 import agence.metier.Taxi;
 import mvp.model.DAOTaxi;
 import mvp.view.TaxiViewInterface;
@@ -44,15 +45,15 @@ public class TaxiPresenter {
         //view.setListDatas(taxis);
     }
 
-    public Taxi selectionner() {
+    public Taxi selectionner(Location lo) {
         logger.info("Appel de sélection taxi");
-        Taxi tx = view.selectionner(model.getTaxis());
+        Taxi tx = view.selectionner(model.getTaxisNotUsed(lo));
         return tx;
     }
 
-    public boolean boucle() {
+    public boolean boucle(Location lo) {
         logger.info("Appel de la boucle");
-        Boolean ok = view.boucle();
+        Boolean ok = view.boucle(model.getTaxisNotUsed(lo));
         return ok;
     }
 

@@ -28,7 +28,9 @@ public class LocationPresenter {
         this.clientPresenter = clientPresenter;
     }
 
-    public void setTaxiPresenter(TaxiPresenter taxiPresenter) { this.taxiPresenter = taxiPresenter; }
+    public void setTaxiPresenter(TaxiPresenter taxiPresenter) {
+        this.taxiPresenter = taxiPresenter;
+    }
 
     public LocationPresenter(DAOLocation model, LocationViewInterface view) {
         this.model = model;
@@ -89,11 +91,11 @@ public class LocationPresenter {
     public void addFacturation(Location lo) {
         Boolean boucle = true;
         while(boucle) {
-            Taxi tx = taxiPresenter.selectionner();
+            Taxi tx = taxiPresenter.selectionner(lo);
             boolean ok = ((LocationSpecial)model).addFacturation(lo,tx);
             if(ok) view.affMsg("Facturation ajoutée");
             else view.affMsg("Erreur lors de l'ajout de la facturation");
-            boucle = taxiPresenter.boucle();
+            boucle = taxiPresenter.boucle(lo);
         }
     }
 }

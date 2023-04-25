@@ -1,5 +1,6 @@
 package mvp.model;
 
+import agence.metier.Location;
 import agence.metier.Taxi;
 import myconnections.DBConnection;
 import org.apache.logging.log4j.LogManager;
@@ -133,6 +134,29 @@ public class TaxiModelDB implements DAOTaxi {
             return lt;
         } catch (SQLException e) {
             //System.err.println("Erreur sql : "+e);
+            logger.error("Erreur SQL : "+e);
+            return null;
+        }
+    }
+
+    @Override
+    public List<Taxi> getTaxisNotUsed(Location location) {
+        List<Taxi> lt = new ArrayList<>();
+        String query = "select * FROM APITAXI where idtaxi NOT IN (SELECT T.idtaxi FROM APIFACTURATION AF INNER JOIN APILOCATION AL on AF.idlocation = AL.idlocation INNER JOIN APITAXI T on AF.idtaxi = T.idtaxi WHERE AF.idlocation = ?)";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,location.getIdLocation());
+            ResultSet rs = pstm.executeQuery();
+            while(rs.next()){
+                int idtaxi = rs.getInt(1);
+                String immatriculation = rs.getString(2);
+                String carburant = rs.getString(3);
+                BigDecimal prixkm = rs.getBigDecimal(4);
+                Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
+                lt.add(tx);
+            }
+            return lt;
+        } catch (SQLException e) {
+            //System.out.println("Erreur sql : "+e);
             logger.error("Erreur SQL : "+e);
             return null;
         }

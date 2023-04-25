@@ -14,5 +14,5 @@ public interface TaxiViewInterface {
 
     public Taxi selectionner(List<Taxi> lt);
 
-    public boolean boucle();
+    public boolean boucle(List<Taxi> lt);
 }

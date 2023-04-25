@@ -1,5 +1,6 @@
 package mvp.model;
 
+import agence.metier.Location;
 import agence.metier.Taxi;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface DAOTaxi {
     Taxi readTaxi(int idTaxi);
 
     List<Taxi> getTaxis();
+
+    List<Taxi> getTaxisNotUsed(Location location);
 }

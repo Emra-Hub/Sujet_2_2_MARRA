@@ -44,14 +44,20 @@ public class TaxiViewConsole implements TaxiViewInterface {
     }
 
     @Override
-    public boolean boucle() {
-        List options = new ArrayList<>(Arrays.asList("oui","non"));
-        System.out.println("Autre taxi ?");
-        int choix = choixListe(options);
-        if (choix == 1) {
-            return true;
+    public boolean boucle(List<Taxi> lt) {
+        if(!lt.isEmpty()) {
+            List options = new ArrayList<>(Arrays.asList("oui","non"));
+            System.out.println("Autre taxi ?");
+            int choix = choixListe(options);
+            if (choix == 1) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        else {
+            System.out.println("Plus aucun taxis disponibles.");
+            return false;
+        }
     }
 
     public void menu(){
