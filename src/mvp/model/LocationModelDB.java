@@ -1,9 +1,6 @@
 package mvp.model;
 
-import agence.metier.Adresse;
-import agence.metier.Client;
-import agence.metier.Location;
-import agence.metier.Taxi;
+import agence.metier.*;
 import myconnections.DBConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -178,6 +175,21 @@ public class LocationModelDB implements DAOLocation, LocationSpecial {
         } catch (SQLException e) {
             //System.err.println("Erreur sql : "+e);
             logger.error("Erreur SQL : "+e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean removeFacturation(Location lo) {
+        String query = "delete from APIFACTURATION where idlocation = ?";
+        try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
+            pstm.setInt(1,lo.getIdLocation());
+            int n = pstm.executeUpdate();
+            if(n!=0) return true;
+            else return false;
+        } catch (SQLException e) {
+            //System.err.println("Erreur sql : "+e);
+            logger.error("Erreur d'effacement : "+e);
             return false;
         }
     }

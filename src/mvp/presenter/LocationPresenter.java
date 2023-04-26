@@ -61,6 +61,7 @@ public class LocationPresenter {
 
 
     public void removeLocation(Location location) {
+        removeFacturation(location);
         boolean ok = model.removeLocation(location);
         if(ok) view.affMsg("Location effacé");
         else view.affMsg("Location non effacé");
@@ -97,5 +98,11 @@ public class LocationPresenter {
             else view.affMsg("Erreur lors de l'ajout de la facturation");
             boucle = taxiPresenter.boucle(lo);
         }
+    }
+
+    public void removeFacturation(Location lo) {
+        boolean ok = ((LocationSpecial)model).removeFacturation(lo);
+        if(ok) view.affMsg("Facturation(s) effacée");
+        else view.affMsg("Facturation(s) non effacée");
     }
 }
