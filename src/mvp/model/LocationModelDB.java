@@ -164,11 +164,11 @@ public class LocationModelDB implements DAOLocation, LocationSpecial {
 
     @Override
     public boolean addFacturation(Location lo, Taxi tx) {
-        String query = "insert into APIFACTURATION(idlocation,idtaxi,cout) values(?,?,?)";
+        String query = "insert into APIFACTURATION(idlocation,idtaxi) values(?,?)";
         try(PreparedStatement pstm = dbConnect.prepareStatement(query)) {
             pstm.setInt(1,lo.getIdLocation());
             pstm.setInt(2,tx.getIdTaxi());
-            pstm.setBigDecimal(3,tx.getPrixKm().multiply(BigDecimal.valueOf(lo.getKmtotal())));
+            //pstm.setBigDecimal(3,tx.getPrixKm().multiply(BigDecimal.valueOf(lo.getKmtotal())));
             int n = pstm.executeUpdate();
             if(n!=0) return true;
             else return false;
