@@ -1,9 +1,5 @@
 package designpatterns.builder;
 
-import agence.metier.Adresse;
-import agence.metier.Client;
-import agence.metier.Facturation;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

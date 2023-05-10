@@ -8,9 +8,52 @@ import java.util.Scanner;
 
 public class Utilitaire {
     private static Scanner sc = new Scanner(System.in);
+    public static int lireInt(){
+        int n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Integer.parseInt(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("Valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
+
+    public static long lireLong(){
+        long n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Long.parseLong(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("Valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
+    public static double lireDouble(){
+        double n=0;
+        do{
+            try {
+                String ns = sc.nextLine();
+                n=Double.parseDouble(ns);
+                return n;
+            }
+            catch(NumberFormatException e){
+                System.out.println("Valeur numérique incorrecte");
+            }
+
+        } while(true);
+    }
     public static int choixListe(List l){
-       affListe(l);
-       return choixElt(l);
+        affListe(l);
+        return choixElt(l);
     }
 
     public static void affListe(List l){
@@ -23,27 +66,41 @@ public class Utilitaire {
     public static int choixElt(List l){
         int choix;
         do {
-            System.out.println("Choix : ");
-            choix = sc.nextInt();
-            sc.skip("\n");
+            System.out.println("choix :");
+            choix = lireInt();
+
         } while(choix <1 || choix > l.size());
         return choix;
     }
 
     public static LocalDate lecDate(){
-        String[] jma = sc.nextLine().split(" ");
-        int j = Integer.parseInt(jma[0]);
-        int m = Integer.parseInt(jma[1]);
-        int a = Integer.parseInt(jma[2]);
-        return LocalDate.of(a,m,j);
+        do {
+            String[] jma = sc.nextLine().split(" ");
+            try {
+                int j = Integer.parseInt(jma[0]);
+                int m = Integer.parseInt(jma[1]);
+                int a = Integer.parseInt(jma[2]);
+                return LocalDate.of(a, m, j);
+            } catch (Exception e) {
+                System.out.println("Date incorrecte");
+            }
+        }while (true);
     }
 
     public static LocalTime lecTime(){
-        String[] hms = sc.nextLine().split(" ");
-        int h = Integer.parseInt(hms[0]);
-        int m = Integer.parseInt(hms[1]);
-        int s = Integer.parseInt(hms[2]);
-        return LocalTime.of(h,m,s);
+        do {
+            try {
+                String[] hms = sc.nextLine().split(" ");
+                int h = Integer.parseInt(hms[0]);
+                int m = Integer.parseInt(hms[1]);
+                int s = Integer.parseInt(hms[2]);
+                return LocalTime.of(h, m, s);
+            }
+            catch (Exception e){
+                System.out.println("Temps incorrect");
+            }
+        }
+        while (true);
     }
 
     public static String getDateFrench(LocalDate d){

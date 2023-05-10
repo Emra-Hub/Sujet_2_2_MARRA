@@ -105,17 +105,23 @@ public class LocationModelDB implements DAOLocation, LocationSpecial {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idclient,mail,nom,prenom,tel);
-                int idadresse = rs.getInt(6);
-                int cp = rs.getInt(7);
-                String localite = rs.getString(8);
-                String rue = rs.getString(9);
-                String num = rs.getString(10);
-                Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
-                LocalDate datecom = rs.getDate(12).toLocalDate();
-                int kmtotal = rs.getInt(13);
-                Location lo = new Location(idLocation,datecom,kmtotal,cl,adr);
-                return lo;
+                try {
+                    Client cl = new Client(idclient,mail,nom,prenom,tel);
+                    int idadresse = rs.getInt(6);
+                    int cp = rs.getInt(7);
+                    String localite = rs.getString(8);
+                    String rue = rs.getString(9);
+                    String num = rs.getString(10);
+                    Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
+                    LocalDate datecom = rs.getDate(12).toLocalDate();
+                    int kmtotal = rs.getInt(13);
+                    Location lo = new Location(idLocation,datecom,kmtotal,cl,adr);
+                    return lo;
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                    return null;
+                }
             }
             else {
                 //System.out.println("Record introuvable.");
@@ -141,18 +147,23 @@ public class LocationModelDB implements DAOLocation, LocationSpecial {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idclient,mail,nom,prenom,tel);
-                int idadresse = rs.getInt(6);
-                int cp = rs.getInt(7);
-                String localite = rs.getString(8);
-                String rue = rs.getString(9);
-                String num = rs.getString(10);
-                Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
-                int idlocation = rs.getInt(11);
-                LocalDate datecom = rs.getDate(12).toLocalDate();
-                int kmtotal = rs.getInt(13);
-                Location lo = new Location(idlocation,datecom,kmtotal,cl,adr);
-                lloc.add(lo);
+                try {
+                    Client cl = new Client(idclient,mail,nom,prenom,tel);
+                    int idadresse = rs.getInt(6);
+                    int cp = rs.getInt(7);
+                    String localite = rs.getString(8);
+                    String rue = rs.getString(9);
+                    String num = rs.getString(10);
+                    Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
+                    int idlocation = rs.getInt(11);
+                    LocalDate datecom = rs.getDate(12).toLocalDate();
+                    int kmtotal = rs.getInt(13);
+                    Location lo = new Location(idlocation,datecom,kmtotal,cl,adr);
+                    lloc.add(lo);
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             return lloc;
         } catch (SQLException e) {

@@ -82,7 +82,7 @@ public class AdresseViewConsole implements AdresseViewInterface {
 
     private void rechercher() {
         System.out.println("Id de l'adresse : ");
-        int idAdresse = sc.nextInt();
+        int idAdresse = lireInt();
         presenter.search(idAdresse);
     }
 

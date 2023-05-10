@@ -109,8 +109,14 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idClient,mail,nom,prenom,tel);
-                return cl;
+                try {
+                    Client cl = new Client(idClient,mail,nom,prenom,tel);
+                    return cl;
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                    return null;
+                }
             }
             else {
                 //System.out.println("Record introuvable.");
@@ -136,8 +142,13 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idclient,mail,nom,prenom,tel);
-                lc.add(cl);
+                try {
+                    Client cl = new Client(idclient,mail,nom,prenom,tel);
+                    lc.add(cl);
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             return lc;
         } catch (SQLException e) {

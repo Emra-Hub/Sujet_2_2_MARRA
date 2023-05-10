@@ -99,9 +99,14 @@ public class CRUDA {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idrech,mail,nom,prenom,tel);
-                System.out.println(cl);
-                opSpeciales(cl);
+                try {
+                    Client cl = new Client(idrech,mail,nom,prenom,tel);
+                    System.out.println(cl);
+                    opSpeciales(cl);
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             else System.out.println("Record introuvable.");
         } catch (SQLException e) {
@@ -121,9 +126,14 @@ public class CRUDA {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idrech,mail,nom,prenom,tel);
-                System.out.println(cl);
-                opModification(cl);
+                try {
+                    Client cl = new Client(idrech,mail,nom,prenom,tel);
+                    System.out.println(cl);
+                    opModification(cl);
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             else System.out.println("Record introuvable.");
         } catch (SQLException e) {
@@ -223,8 +233,13 @@ public class CRUDA {
                 String nom = rs.getString(3);
                 String prenom = rs.getString(4);
                 String tel = rs.getString(5);
-                Client cl = new Client(idclient,mail,nom,prenom,tel);
-                System.out.println(cl);
+                try {
+                    Client cl = new Client(idclient,mail,nom,prenom,tel);
+                    System.out.println(cl);
+                }
+                catch (Exception e) {
+                    System.out.println("Erreur : " + e.getMessage());
+                }
             }
         } catch (SQLException e) {
             System.out.println("Erreur sql : "+e);

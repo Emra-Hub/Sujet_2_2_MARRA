@@ -79,18 +79,22 @@ public class ClientViewConsole implements ClientViewInterface {
         System.out.println("Numéro de ligne : ");
         int nl = choixElt(lc);
         Client client = lc.get(nl-1);
-        String mail = modifyIfNotBlank("Mail",client.getMail());
         String nom = modifyIfNotBlank("Nom",client.getNom());
         String prenom = modifyIfNotBlank("Prénom",client.getPrenom());
         String tel = modifyIfNotBlank("Téléphone",client.getTelephone());
-        presenter.update(new Client(client.getIdClient(),mail,nom,prenom,tel));
+        try {
+            presenter.update(new Client(client.getIdClient(),client.getMail(),nom,prenom,tel));
+        }
+        catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
         lc = presenter.getAll();//rafraichissement
         affListe(lc);
     }
 
     private void rechercher() {
         System.out.println("Id du client : ");
-        int idClient = sc.nextInt();
+        int idClient = lireInt();
         presenter.search(idClient);
     }
 
@@ -110,15 +114,19 @@ public class ClientViewConsole implements ClientViewInterface {
         String prenom = sc.nextLine();
         System.out.print("Téléphone : ");
         String tel = sc.nextLine();
-        presenter.addClient(new Client(0,mail,nom,prenom,tel));
+        try {
+            presenter.addClient(new Client(0,mail,nom,prenom,tel));
+        }
+        catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
     }
 
     private void special() {
         System.out.println("Numéro de ligne : ");
-        int nl =  sc.nextInt()-1;
-        sc.skip("\n");
+        int nl = choixElt(lc);
+        Client client = lc.get(nl-1);
         if (nl >= 0) {
-            Client client = lc.get(nl);
             do {
                 System.out.println("1.Taxis utilisés\n2.Locations effectuées\n3.Destination\n4.Menu principal");
                 System.out.println("Choix : ");

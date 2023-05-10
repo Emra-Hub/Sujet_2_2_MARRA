@@ -1,4 +1,4 @@
-package agence.metier;
+package designpatterns.builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Client {
     /**
      * identifiant unique du client
      */
-    private int idClient;
+    protected int idClient;
 
     /**
      * mail unique du client
@@ -22,12 +22,12 @@ public class Client {
      * prénom du client
      * téléphone du client
      */
-    private String mail, nom, prenom, telephone;
+    protected String mail, nom, prenom, telephone;
 
     /**
      * ensemble des locations du client
      */
-    private List<Location> locations = new ArrayList<>();
+    protected List<Location> locations = new ArrayList<>();
 
     /**
      * constructeur par défaut
@@ -44,10 +44,7 @@ public class Client {
      * @param prenom prénom du client
      * @param telephone téléphone du client
      */
-    public Client(int idClient, String mail, String nom, String prenom, String telephone) throws Exception {
-        if(mail == null || mail.trim().equals("")) throw new Exception("Le mail ne peut pas être vide");
-        if(nom == null || nom.trim().equals("")) throw new Exception("Le nom ne peut pas être vide");
-        if(prenom == null || prenom.trim().equals("")) throw new Exception("Le prénom ne peut pas être vide");
+    public Client(int idClient, String mail, String nom, String prenom, String telephone) {
         this.idClient = idClient;
         this.mail = mail;
         this.nom = nom;

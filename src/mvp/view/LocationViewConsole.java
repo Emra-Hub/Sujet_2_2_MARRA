@@ -82,7 +82,7 @@ public class LocationViewConsole implements LocationViewInterface {
 
     private void rechercher() {
         System.out.println("Id de la location : ");
-        int idLocation = sc.nextInt();
+        int idLocation = lireInt();
         presenter.search(idLocation);
     }
 

@@ -1,8 +1,5 @@
 package designpatterns.builder;
 
-import agence.metier.Adresse;
-import agence.metier.Client;
-
 import java.time.LocalDate;
 
 public class Agence {
@@ -57,14 +54,12 @@ public class Agence {
             System.out.println("Erreur : "+e.getMessage());
         }
 
-        a = null;
-
         try {
             Location l5 = new Location.LocationBuilder().
                     setIdLocation(5).
                     setDateLoc(LocalDate.of(2023,12,31)).
                     setKmtotal(8).
-                    setAdrDepart(a).
+                    setAdrDepart(null).
                     setClient(c).
                     build();
             System.out.println(l5);
@@ -72,16 +67,13 @@ public class Agence {
             System.out.println("Erreur : "+e.getMessage());
         }
 
-        a = new Adresse(1,7000,"Mons","Rue des pommes","12");
-        c = null;
-
         try {
             Location l6 = new Location.LocationBuilder().
                     setIdLocation(6).
                     setDateLoc(LocalDate.of(2023,12,25)).
                     setKmtotal(5).
                     setAdrDepart(a).
-                    setClient(c).
+                    setClient(null).
                     build();
             System.out.println(l6);
         } catch (Exception e) {

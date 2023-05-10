@@ -98,7 +98,7 @@ public class TaxiViewConsole implements TaxiViewInterface {
 
     private void rechercher() {
         System.out.println("Id du taxi : ");
-        int idTaxi = sc.nextInt();
+        int idTaxi = lireInt();
         presenter.search(idTaxi);
     }
 
