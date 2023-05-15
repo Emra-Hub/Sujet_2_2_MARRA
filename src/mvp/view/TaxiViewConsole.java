@@ -91,7 +91,11 @@ public class TaxiViewConsole implements TaxiViewInterface {
         String immatriculation = modifyIfNotBlank("Immatriculation", taxi.getImmatriculation());
         String carburant = modifyIfNotBlank("Carburant",taxi.getCarburant()); //Pouvoir faire le choix entre "DIESEL","ESSENCE","ELECTRIQUE"
         BigDecimal prixkm = new BigDecimal(modifyIfNotBlank("Prix km",taxi.getPrixKm()+""));
-        presenter.update(new Taxi(taxi.getIdTaxi(),immatriculation,carburant,prixkm));
+        try {
+            presenter.update(new Taxi(taxi.getIdTaxi(),immatriculation,carburant,prixkm));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
         lt = presenter.getAll();//rafraichissement
         affListe(lt);
     }
@@ -118,6 +122,10 @@ public class TaxiViewConsole implements TaxiViewInterface {
         System.out.print("Prix km : ");
         BigDecimal prixkm = sc.nextBigDecimal();
         sc.skip("\n");
-        presenter.addTaxi(new Taxi(0,immatriculation,carburant.get(ch-1),prixkm));
+        try {
+            presenter.addTaxi(new Taxi(0,immatriculation,carburant.get(ch-1),prixkm));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
     }
 }

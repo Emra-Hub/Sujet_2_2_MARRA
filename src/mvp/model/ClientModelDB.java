@@ -172,8 +172,12 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
                 String immatriculation = rs.getString(5);
                 String carburant = rs.getString(6);
                 BigDecimal prixkm = rs.getBigDecimal(7);
-                Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
-                lt.add(tx);
+                try {
+                    Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
+                    lt.add(tx);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) {
                 //System.out.println("Aucun taxi trouvé");
@@ -214,8 +218,12 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
                 int idlocation = rs.getInt(1);
                 LocalDate dateloc = rs.getDate(2).toLocalDate();
                 int kmtotal = rs.getInt(3);
-                Location lo = new Location(idlocation,dateloc,kmtotal);
-                lloc.add(lo);
+                try {
+                    Location lo = new Location(idlocation,dateloc,kmtotal);
+                    lloc.add(lo);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) {
                 //System.out.println("Aucune location trouvée");
@@ -245,8 +253,12 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
                 String localite = rs.getString(3);
                 String rue = rs.getString(4);
                 String num = rs.getString(5);
-                Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
-                ladr.add(adr);
+                try {
+                    Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
+                    ladr.add(adr);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) {
                 //System.out.println("Aucune adresse trouvée");

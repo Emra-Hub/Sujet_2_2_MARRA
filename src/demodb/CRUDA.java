@@ -280,8 +280,12 @@ public class CRUDA {
                 String immatriculation = rs.getString(5);
                 String carburant = rs.getString(6);
                 BigDecimal prixkm = rs.getBigDecimal(7);
-                Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
-                System.out.println(tx);
+                try {
+                    Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
+                    System.out.println(tx);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) System.out.println("Aucun taxi trouvé");
         } catch (SQLException e) {
@@ -312,8 +316,12 @@ public class CRUDA {
                 int idlocation = rs.getInt(1);
                 LocalDate dateloc = rs.getDate(2).toLocalDate();
                 int kmtotal = rs.getInt(3);
-                Location lo = new Location(idlocation,dateloc,kmtotal);
-                System.out.println(lo.toString2());
+                try {
+                    Location lo = new Location(idlocation,dateloc,kmtotal);
+                    System.out.println(lo.toString2());
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) System.out.println("Aucune location trouvée");
         } catch (SQLException e) {
@@ -334,8 +342,12 @@ public class CRUDA {
                 String localite = rs.getString(3);
                 String rue = rs.getString(4);
                 String num = rs.getString(5);
-                Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
-                System.out.println(adr);
+                try {
+                    Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
+                    System.out.println(adr);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             if(!trouve) System.out.println("Aucune adresse trouvée");
         } catch (SQLException e) {

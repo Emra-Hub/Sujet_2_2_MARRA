@@ -102,8 +102,13 @@ public class TaxiModelDB implements DAOTaxi {
                 String immatriculation = rs.getString(2);
                 String carburant = rs.getString(3);
                 BigDecimal prixkm = rs.getBigDecimal(4);
-                Taxi tx = new Taxi(idTaxi,immatriculation,carburant,prixkm);
-                return tx;
+                try {
+                    Taxi tx = new Taxi(idTaxi,immatriculation,carburant,prixkm);
+                    return tx;
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                    return null;
+                }
             }
             else {
                 //System.out.println("Record introuvable.");
@@ -128,8 +133,12 @@ public class TaxiModelDB implements DAOTaxi {
                 String immatriculation = rs.getString(2);
                 String carburant = rs.getString(3);
                 BigDecimal prixkm = rs.getBigDecimal(4);
-                Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
-                lt.add(tx);
+                try {
+                    Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
+                    lt.add(tx);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             return lt;
         } catch (SQLException e) {
@@ -151,8 +160,12 @@ public class TaxiModelDB implements DAOTaxi {
                 String immatriculation = rs.getString(2);
                 String carburant = rs.getString(3);
                 BigDecimal prixkm = rs.getBigDecimal(4);
-                Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
-                lt.add(tx);
+                try {
+                    Taxi tx = new Taxi(idtaxi,immatriculation,carburant,prixkm);
+                    lt.add(tx);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             return lt;
         } catch (SQLException e) {

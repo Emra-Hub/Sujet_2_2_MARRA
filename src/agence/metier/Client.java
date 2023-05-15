@@ -45,9 +45,9 @@ public class Client {
      * @param telephone téléphone du client
      */
     public Client(int idClient, String mail, String nom, String prenom, String telephone) throws Exception {
-        if(mail == null || mail.trim().equals("")) throw new Exception("Le mail ne peut pas être vide");
-        if(nom == null || nom.trim().equals("")) throw new Exception("Le nom ne peut pas être vide");
-        if(prenom == null || prenom.trim().equals("")) throw new Exception("Le prénom ne peut pas être vide");
+        if (mail == null || mail.trim().equals("")) throw new Exception("Le mail ne peut pas être vide.");
+        if (nom == null || nom.trim().equals("")) throw new Exception("Le nom ne peut pas être vide.");
+        if (prenom == null || prenom.trim().equals("")) throw new Exception("Le prénom ne peut pas être vide.");
         this.idClient = idClient;
         this.mail = mail;
         this.nom = nom;

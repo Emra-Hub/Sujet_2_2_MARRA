@@ -72,10 +72,13 @@ public class LocationViewConsole implements LocationViewInterface {
         System.out.println("Numéro de ligne : ");
         int nl = choixElt(lloc);
         Location location = lloc.get(nl-1);
-        String date = modifyIfNotBlank("Date location",location.getDateLoc()+""); //Il faudrait voir pour utiliser la fonction getDateFrench
-        LocalDate dateloc = LocalDate.parse(date);
+        LocalDate dateloc = LocalDate.parse(modifyIfNotBlank("Date location",location.getDateLoc()+"")); //Il faudrait voir pour utiliser la fonction getDateFrench
         Integer kmtotal = Integer.parseInt(modifyIfNotBlank("Km total",location.getKmtotal()+""));
-        presenter.update(new Location(location.getIdLocation(),dateloc,kmtotal));
+        try {
+            presenter.update(new Location(location.getIdLocation(),dateloc,kmtotal));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
         lloc = presenter.getAll();
         affListe(lloc);
     }
@@ -102,6 +105,10 @@ public class LocationViewConsole implements LocationViewInterface {
         System.out.print("Km total : ");
         int kmtotal = sc.nextInt();
         sc.skip("\n");
-        presenter.addLocation(new Location(0,dateloc,kmtotal));
+        try {
+            presenter.addLocation(new Location(0,dateloc,kmtotal));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
     }
 }

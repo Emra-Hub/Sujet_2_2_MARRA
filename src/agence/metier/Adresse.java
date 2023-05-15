@@ -36,7 +36,9 @@ public class Adresse {
      * @param rue rue de l'adresse
      * @param num numéro de l'adresse
      */
-    public Adresse(int idAdresse, int cp, String localite, String rue, String num) {
+    public Adresse(int idAdresse, int cp, String localite, String rue, String num) throws Exception {
+        if (cp < 1000 || cp > 9999) throw new Exception("Le code postal doit être compris entre 1000 et 9999.");
+        if (localite == null || localite.trim().equals("")) throw new Exception("La localité ne peut pas être vide.");
         this.idAdresse = idAdresse;
         this.cp = cp;
         this.localite = localite;

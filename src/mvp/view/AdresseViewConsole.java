@@ -75,7 +75,11 @@ public class AdresseViewConsole implements AdresseViewInterface {
         String localite = modifyIfNotBlank("Localité",adresse.getLocalite());
         String rue = modifyIfNotBlank("Rue",adresse.getRue());
         String num = modifyIfNotBlank("Numéro",adresse.getNum());
-        presenter.update(new Adresse(adresse.getIdAdresse(),cp,localite,rue,num));
+        try {
+            presenter.update(new Adresse(adresse.getIdAdresse(),cp,localite,rue,num));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
         la = presenter.getAll(); //rafraichissement
         affListe(la);
     }
@@ -103,6 +107,10 @@ public class AdresseViewConsole implements AdresseViewInterface {
         String rue = sc.nextLine();
         System.out.print("Numéro : ");
         String num = sc.nextLine();
-        presenter.addAdresse(new Adresse(0,cp,localite,rue,num));
+        try {
+            presenter.addAdresse(new Adresse(0,cp,localite,rue,num));
+        } catch (Exception e) {
+            System.out.println("Erreur : "+e.getMessage());
+        }
     }
 }

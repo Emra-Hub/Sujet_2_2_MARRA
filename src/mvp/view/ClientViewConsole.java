@@ -79,11 +79,12 @@ public class ClientViewConsole implements ClientViewInterface {
         System.out.println("Numéro de ligne : ");
         int nl = choixElt(lc);
         Client client = lc.get(nl-1);
+        String mail = modifyIfNotBlank("Mail",client.getMail());
         String nom = modifyIfNotBlank("Nom",client.getNom());
         String prenom = modifyIfNotBlank("Prénom",client.getPrenom());
         String tel = modifyIfNotBlank("Téléphone",client.getTelephone());
         try {
-            presenter.update(new Client(client.getIdClient(),client.getMail(),nom,prenom,tel));
+            presenter.update(new Client(client.getIdClient(),mail,nom,prenom,tel));
         }
         catch (Exception e) {
             System.out.println("Erreur : "+e.getMessage());

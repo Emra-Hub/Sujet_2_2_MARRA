@@ -52,8 +52,10 @@ public class LocationPresenter {
         location.setClient(cl);
         location.setAdrDepart(adr);
         Location lo = model.addLocation(location);
-        addFacturation(lo);
-        if(lo!=null) view.affMsg("Création de : "+lo);
+        if(lo!=null) {
+            addFacturation(lo);
+            view.affMsg("Création de : "+lo);
+        }
         else view.affMsg("Erreur de création");
         //List<Location> locations = model.getLocations();
         //view.setListDatas(locations);
@@ -63,8 +65,8 @@ public class LocationPresenter {
     public void removeLocation(Location location) {
         removeFacturation(location);
         boolean ok = model.removeLocation(location);
-        if(ok) view.affMsg("Location effacé");
-        else view.affMsg("Location non effacé");
+        if(ok) view.affMsg("Location effacée");
+        else view.affMsg("Location non effacée");
         //List<Location> locations = model.getLocations();
         //view.setListDatas(locations);
     }
@@ -102,7 +104,7 @@ public class LocationPresenter {
 
     public void removeFacturation(Location lo) {
         boolean ok = ((LocationSpecial)model).removeFacturation(lo);
-        if(ok) view.affMsg("Facturation(s) effacée");
-        else view.affMsg("Facturation(s) non effacée");
+        if(ok) view.affMsg("Facturation(s) effacée(s)");
+        else view.affMsg("Facturation(s) non effacée(s)");
     }
 }

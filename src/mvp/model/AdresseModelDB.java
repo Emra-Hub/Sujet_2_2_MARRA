@@ -106,8 +106,13 @@ public class AdresseModelDB implements DAOAdresse {
                 String localite = rs.getString(3);
                 String rue = rs.getString(4);
                 String num = rs.getString(5);
-                Adresse adr = new Adresse(idAdresse,cp,localite,rue,num);
-                return adr;
+                try {
+                    Adresse adr = new Adresse(idAdresse,cp,localite,rue,num);
+                    return adr;
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                    return null;
+                }
             }
             else {
                 //System.out.println("Record introuvable.");
@@ -133,8 +138,12 @@ public class AdresseModelDB implements DAOAdresse {
                 String localite = rs.getString(3);
                 String rue = rs.getString(4);
                 String num = rs.getString(5);
-                Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
-                la.add(adr);
+                try {
+                    Adresse adr = new Adresse(idadresse,cp,localite,rue,num);
+                    la.add(adr);
+                } catch (Exception e) {
+                    System.out.println("Erreur : "+e.getMessage());
+                }
             }
             return la;
         } catch (SQLException e) {

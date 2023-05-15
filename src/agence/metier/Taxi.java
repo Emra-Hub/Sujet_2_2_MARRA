@@ -40,7 +40,9 @@ public class Taxi {
      * @param carburant carburant du taxi : DIESEL-ESSENCE-ELECTRIQUE
      * @param prixKm prix au km du taxi au moment de la location
      */
-    public Taxi(int idTaxi, String immatriculation, String carburant, BigDecimal prixKm) {
+    public Taxi(int idTaxi, String immatriculation, String carburant, BigDecimal prixKm) throws Exception {
+        if (immatriculation == null || immatriculation.trim().equals("")) throw new Exception("L'immatriculation ne peut pas être vide.");
+        if (prixKm.compareTo(BigDecimal.ONE) < 0) throw new Exception("Le prix au kilomètre doit être supérieur à 0.");
         this.idTaxi = idTaxi;
         this.immatriculation = immatriculation;
         this.carburant = carburant;

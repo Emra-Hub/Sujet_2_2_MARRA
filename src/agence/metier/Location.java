@@ -55,7 +55,8 @@ public class Location {
      * @param dateLoc date de la location
      * @param kmtotal kilomètre(s) total du trajet de la location
      */
-    public Location(int idLocation, LocalDate dateLoc, int kmtotal) {
+    public Location(int idLocation, LocalDate dateLoc, int kmtotal) throws Exception {
+        if (kmtotal < 1) throw new Exception("Le kilométrage total doit être supérieur à 0.");
         this.idLocation = idLocation;
         this.dateLoc = dateLoc;
         this.kmtotal = kmtotal;
@@ -70,7 +71,8 @@ public class Location {
      * @param client client de la location
      * @param adrDepart adresse de départ de la location
      */
-    public Location(int idLocation, LocalDate dateLoc, int kmtotal, Client client, Adresse adrDepart) {
+    public Location(int idLocation, LocalDate dateLoc, int kmtotal, Client client, Adresse adrDepart) throws Exception {
+        if (kmtotal < 1) throw new Exception("Le kilométrage total doit être supérieur à 0.");
         this.idLocation = idLocation;
         this.dateLoc = dateLoc;
         this.kmtotal = kmtotal;
