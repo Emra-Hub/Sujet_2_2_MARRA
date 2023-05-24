@@ -85,4 +85,22 @@ public class ClientPresenter {
         if(ladr == null || ladr.isEmpty()) view.affMsg("Aucune adresse trouvée");
         else view.affList(ladr);
     }
+
+    public void API_insert_client() {
+        int idclient = ((ClientSpecial)model).API_insert_client();
+        if(idclient==0) view.affMsg("Exception rencontrée lors de l'appel de la fonction.");
+        else view.affMsg("Valeur de la pk créée : "+idclient);
+    }
+
+    public void API_get_client_locations() {
+        List<String> lstr = ((ClientSpecial)model).API_get_client_locations();
+        if(lstr==null) view.affMsg("Exception rencontrée lors de l'appel de la fonction.");
+        else view.affList(lstr);
+    }
+
+    public void API_count_location() {
+        int nloc = ((ClientSpecial)model).API_count_location();
+        if(nloc==0) view.affMsg("Exception rencontrée lors de l'appel de la procédure.");
+        else view.affMsg("Nombre de location(s) effectuée(s) : "+nloc);
+    }
 }

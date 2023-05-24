@@ -1,6 +1,5 @@
 package mvp.view;
 
-import agence.metier.Client;
 import agence.metier.Location;
 import mvp.presenter.LocationPresenter;
 
@@ -45,7 +44,7 @@ public class LocationViewConsole implements LocationViewInterface {
     }
 
     public void menu(){
-        List options = new ArrayList<>(Arrays.asList("Ajouter","Retirer","Rechercher","Modifier","Retour"));
+        List options = new ArrayList<>(Arrays.asList("Ajouter","Retirer","Rechercher","Modifier","Special SGBD","Retour"));
         do {
             int ch = choixListe(options);
 
@@ -63,6 +62,9 @@ public class LocationViewConsole implements LocationViewInterface {
                     modifier();
                     break;
                 case 5:
+                    special();
+                    break;
+                case 6:
                     return;
             }
         } while (true);
@@ -110,5 +112,21 @@ public class LocationViewConsole implements LocationViewInterface {
         } catch (Exception e) {
             System.out.println("Erreur : "+e.getMessage());
         }
+    }
+
+    private void special() {
+        do {
+            List options = new ArrayList<>(Arrays.asList("Prix total d’une location donnée","Prix total des locations d'un jour donné","Menu principal"));
+            int ch = choixListe(options);
+            switch (ch) {
+                case 1:
+                    presenter.API_get_total_cost_byLocation();
+                    break;
+                case 2:
+                    presenter.API_get_total_cost_byDay();
+                case 3:
+                    return;
+            }
+        } while (true);
     }
 }

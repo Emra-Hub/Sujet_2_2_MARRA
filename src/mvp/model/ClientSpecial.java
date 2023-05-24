@@ -13,4 +13,10 @@ public interface ClientSpecial {
     public List<Location> locations(Client client);
 
     public List<Adresse> destinations(Client client);
+
+    public int API_insert_client();
+
+    public List<String> API_get_client_locations();
+
+    public int API_count_location();
 }

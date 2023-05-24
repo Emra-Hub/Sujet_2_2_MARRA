@@ -2,6 +2,7 @@ package mvp.model;
 
 import agence.metier.*;
 import myconnections.DBConnection;
+import oracle.jdbc.OracleTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static utilitaires.Utilitaire.lireInt;
 
 public class LocationModelDB implements DAOLocation, LocationSpecial {
     private static final Logger logger = LogManager.getLogger(ClientModelDB.class);
@@ -202,6 +206,56 @@ public class LocationModelDB implements DAOLocation, LocationSpecial {
             //System.err.println("Erreur sql : "+e);
             logger.error("Erreur d'effacement : "+e);
             return false;
+        }
+    }
+
+    @Override
+    public BigDecimal API_get_total_cost_byLocation() {
+        try(CallableStatement cs = dbConnect.prepareCall("{?=call API_get_total_cost_byLocation(?)}")) {
+            System.out.println("Id de la location : ");
+            int idLocation = lireInt();
+            cs.registerOutParameter(1, OracleTypes.DECIMAL);
+            cs.setInt(2,idLocation);
+            cs.executeQuery();
+            BigDecimal totalCost = cs.getBigDecimal(1);
+            return totalCost;
+        }
+        catch (SQLException e) {
+            //System.out.println("Erreur SQL : "+e);
+            logger.error("Erreur SQL : "+e);
+            return null;
+        }
+        catch (Exception e) {
+            //System.out.println("Exception : "+e);
+            logger.error("Exception : "+e);
+            return null;
+        }
+    }
+
+    @Override
+    public BigDecimal API_get_total_cost_byDay() {
+        try(CallableStatement cs = dbConnect.prepareCall("{?=call API_get_total_cost_byDay(?)}")) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Date : ");
+            int j = sc.nextInt();
+            int m = sc.nextInt();
+            int a = sc.nextInt();
+            LocalDate date = LocalDate.of(a, m, j);
+            cs.registerOutParameter(1, OracleTypes.DECIMAL);
+            cs.setDate(2,java.sql.Date.valueOf(date));
+            cs.executeQuery();
+            BigDecimal totalCost = cs.getBigDecimal(1);
+            return totalCost;
+        }
+        catch (SQLException e) {
+            //System.out.println("Erreur SQL : "+e);
+            logger.error("Erreur SQL : "+e);
+            return null;
+        }
+        catch (Exception e) {
+            //System.out.println("Exception : "+e);
+            logger.error("Exception : "+e);
+            return null;
         }
     }
 }

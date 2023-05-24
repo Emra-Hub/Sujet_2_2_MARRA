@@ -10,6 +10,7 @@ import mvp.view.LocationViewInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class LocationPresenter {
@@ -106,5 +107,17 @@ public class LocationPresenter {
         boolean ok = ((LocationSpecial)model).removeFacturation(lo);
         if(ok) view.affMsg("Facturation(s) effacée(s)");
         else view.affMsg("Facturation(s) non effacée(s)");
+    }
+
+    public void API_get_total_cost_byLocation() {
+        BigDecimal totalcost = ((LocationSpecial)model).API_get_total_cost_byLocation();
+        if(totalcost==null) view.affMsg("Exception rencontrée lors de l'appel de la fonction.");
+        else view.affMsg("Prix total de cette location : "+totalcost+" euro(s)");
+    }
+
+    public void API_get_total_cost_byDay() {
+        BigDecimal totalcost = ((LocationSpecial)model).API_get_total_cost_byDay();
+        if(totalcost==null) view.affMsg("Exception rencontrée lors de l'appel de la fonction.");
+        else view.affMsg("Prix total des location pour ce jour : "+totalcost+" euro(s)");
     }
 }

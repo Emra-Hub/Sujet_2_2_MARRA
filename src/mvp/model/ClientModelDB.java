@@ -5,6 +5,7 @@ import agence.metier.Client;
 import agence.metier.Location;
 import agence.metier.Taxi;
 import myconnections.DBConnection;
+import oracle.jdbc.OracleTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static utilitaires.Utilitaire.lireInt;
 
 public class ClientModelDB implements DAOClient, ClientSpecial {
     private static final Logger logger = LogManager.getLogger(ClientModelDB.class);
@@ -270,6 +273,103 @@ public class ClientModelDB implements DAOClient, ClientSpecial {
             //System.out.println("Erreur sql : "+e);
             logger.error("Erreur SQL : "+e);
             return null;
+        }
+    }
+
+    @Override
+    public int API_insert_client() {
+        try(CallableStatement cs = dbConnect.prepareCall("{?=call API_insert_client(?,?,?,?)}")) {
+            cs.registerOutParameter(1, OracleTypes.INTEGER);
+            Scanner sc= new Scanner(System.in);
+            System.out.print("Mail : ");
+            String mail = sc.nextLine();
+            System.out.print("Nom : ");
+            String nom = sc.nextLine();
+            System.out.print("Prénom : ");
+            String prenom = sc.nextLine();
+            System.out.print("Téléphone : ");
+            String tel = sc.nextLine();
+
+            cs.setString(2,mail);
+            cs.setString(3,nom);
+            cs.setString(4,prenom);
+            cs.setString(5,tel);
+            cs.executeQuery();
+
+            int idclient = cs.getInt(1);
+            return idclient;
+        }
+        catch (SQLException e) {
+            //System.out.println("Erreur SQL : "+e);
+            logger.error("Erreur SQL : "+e);
+            return 0;
+        }
+        catch (Exception e) {
+            //System.out.println("Exception : "+e);
+            logger.error("Exception : "+e);
+            return 0;
+        }
+    }
+
+    @Override
+    public List<String> API_get_client_locations() {
+        List<String> lstr = new ArrayList<>();
+        try(CallableStatement cs = dbConnect.prepareCall("{?=call API_get_client_locations(?)}")) {
+            System.out.println("Id du client : ");
+            int idclient = lireInt();
+            cs.registerOutParameter(1, OracleTypes.CURSOR);
+            cs.setInt(2,idclient);
+            cs.executeQuery();
+            ResultSet rs=(ResultSet) cs.getObject(1);
+            boolean hasLocations = false;
+            while(rs.next()){
+                hasLocations = true;
+                int idlocation = rs.getInt(1);
+                LocalDate dateloc = rs.getDate(2).toLocalDate();
+                int kmtotal = rs.getInt(3);
+                BigDecimal totalcost = rs.getBigDecimal(4);
+                lstr.add("Location : "+idlocation+" - Date : "+dateloc+" - Kilométrage total : "+kmtotal+" - Coût total : "+totalcost+" euro(s)");
+            }
+            if (!hasLocations) {
+                //System.out.println("Aucune location pour ce client.");
+                logger.error("Aucune location pour ce client.");
+                return null;
+            }
+            return lstr;
+        }
+        catch (SQLException e) {
+            //System.out.println("Erreur SQL : "+e);
+            logger.error("Erreur SQL : "+e);
+            return null;
+        }
+        catch (Exception e) {
+            //System.out.println("Exception : "+e);
+            logger.error("Exception : "+e);
+            return null;
+        }
+    }
+
+    @Override
+    public int API_count_location() {
+        try(CallableStatement cs = dbConnect.prepareCall("{call API_count_location(?,?)}")) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Mail : ");
+            String mail = sc.nextLine();
+            cs.setString(1,mail);
+            cs.registerOutParameter(2, OracleTypes.INTEGER);
+            cs.executeQuery();
+            int nloc = cs.getInt(2);
+            return nloc;
+        }
+        catch (SQLException e) {
+            //System.out.println("Erreur SQL : "+e);
+            logger.error("Erreur SQL : "+e);
+            return 0;
+        }
+        catch (Exception e) {
+            //System.out.println("Exception : "+e);
+            logger.error("Exception : "+e);
+            return 0;
         }
     }
 }

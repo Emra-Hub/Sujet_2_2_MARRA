@@ -49,7 +49,7 @@ public class ClientViewConsole implements ClientViewInterface {
     }
 
     public void menu(){
-        List options = new ArrayList<>(Arrays.asList("Ajouter","Retirer","Rechercher","Modifier","Special","Retour"));
+        List options = new ArrayList<>(Arrays.asList("Ajouter","Retirer","Rechercher","Modifier","Special","Special SGBD","Retour"));
         do {
             int ch = choixListe(options);
 
@@ -70,6 +70,9 @@ public class ClientViewConsole implements ClientViewInterface {
                     special();
                     break;
                 case 6:
+                    specialSGBD();
+                    break;
+                case 7:
                     return;
             }
         } while (true);
@@ -129,10 +132,8 @@ public class ClientViewConsole implements ClientViewInterface {
         Client client = lc.get(nl-1);
         if (nl >= 0) {
             do {
-                System.out.println("1.Taxis utilisés\n2.Locations effectuées\n3.Destination\n4.Menu principal");
-                System.out.println("Choix : ");
-                int ch = sc.nextInt();
-                sc.skip("\n");
+                List options = new ArrayList<>(Arrays.asList("Taxis utilisés","Locations effectuées","Destination","Menu principal"));
+                int ch = choixListe(options);
                 switch (ch) {
                     case 1:
                         presenter.taxis(client);
@@ -143,11 +144,29 @@ public class ClientViewConsole implements ClientViewInterface {
                     case 3:
                         presenter.destinations(client);
                         break;
-                    case 4: return;
-                    default:
-                        System.out.println("Choix invalide recommencez");
+                    case 4:
+                        return;
                 }
             } while (true);
         }
+    }
+
+    private void specialSGBD() {
+        do {
+            List options = new ArrayList<>(Arrays.asList("Insertion client et récupération de la valeur de la pk créée","Toutes les locations ainsi que leur coût total d'un client donné","Nombre de locations déjà effectuées par un client selon son mail","Menu principal"));
+            int ch = choixListe(options);
+            switch (ch) {
+                case 1:
+                    presenter.API_insert_client();
+                    break;
+                case 2:
+                    presenter.API_get_client_locations();
+                    break;
+                case 3:
+                    presenter.API_count_location();
+                case 4:
+                    return;
+            }
+        } while (true);
     }
 }
